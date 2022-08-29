@@ -13,3 +13,4 @@ Information here is provided purely for reference.
     - [Ext 1](lesson-3-1.html)
 - [Lesson 4](lesson-4.html)
 - [Lesson 5](lesson-5.html)
+- [Lesson 6](lesson-6.html)
