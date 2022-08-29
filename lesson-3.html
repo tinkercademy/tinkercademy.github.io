@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>SIMC Lesson 3 - Graph Traversal</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/darcula.min.css">
+
+    <style>
+        h1 {
+            font-size: 1.5em;
+        }
+        h2 {
+            font-size: 1.2em;
+        }
+        p, li {
+            font-size: 0.75em;
+        }
+        code {
+            font-size: 0.8em;
+        }
+        table, blockquote {
+            font-size: 0.6em;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        
+        <section>
+            <h1>Lesson 3</h1>
+<h2>Graph Traversal</h2>
+<img src="https://p-81fpym.t0.n0.cdn.getcloudapp.com/items/OAuWZ7ol/6ec2187c-e462-404f-9df9-e225ce8aabca.png?source=viewer&v=69d8fa23285650289d6cb59874ade9b1" width="20%">
+        </section>
+        
+        <section>
+            <h2>Lesson outline</h2>
+<ul>
+<li>Understand the purpose of search algorithms</li>
+<li>Broadly understand the BFS algorithm</li>
+<li>Broadly understand the DFS algorithm</li>
+<li>Write pseudocode to implement BFS</li>
+<li>Appreciate when to apply BFS/DFS</li>
+<li>Apply BFS/DFS in coding problems using networkx</li>
+<li>Analyze the time complexity of BFS/DFS</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h2>Graph Traversal</h2>
+<p>Some problems that require graph traversal:</p>
+<ul>
+<li>Finding the shortest path between two vertices</li>
+<li>Topological sorting</li>
+<li>Maze solving</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h3>Traversal algorithms</h3>
+<p>There are only 2 kinds currently known</p>
+<ul>
+<li>Breadth-first search (BFS)</li>
+<li>Depth-first search (DFS)</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h2>Breadth-First Search (BFS)</h2>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif" alt="Animation" /></p>
+<p><em>Credit: Wikipedia</em></p>
+
+        </section>
+        
+        <section>
+            <h3>BFS Psuedocode</h3>
+<pre><code class="language-python">def bfs_find(graph: dict[int, tuple[int, int]],
+             start: int, end: int) -&gt; bool:
+    &quot;&quot;&quot;
+    Checks if a path exists from `start` to `end`
+    in the graph.
+    
+    :param graph: The graph to search in adjacency list format.
+    :param start: The starting vertex.
+    :param end: The ending vertex.
+    :return: True if a path exists, False otherwise.
+    &quot;&quot;&quot;
+    visited = set()
+    queue = [start]
+    while queue:
+        vertex = queue.pop(0)
+        if vertex == end:
+            return True
+        if vertex not in visited:
+            visited.add(vertex)
+            for neighbor in graph[vertex]:
+                queue.append(neighbor)
+                
+    return False
+
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>BFS Complexity analysis</h3>
+<p>Please look at the whiteboard.</p>
+
+        </section>
+        
+        <section>
+            <h3>BFS in <code>networkx</code></h3>
+<pre><code class="language-python">import networkx as nx
+
+G = nx.Graph()
+G.add_edges_from([(1, 2), (1, 3), (2, 4), (3, 4), (3, 5), (4, 5)])
+
+print(list(nx.edge_bfs(G, 1)))
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Depth-First Search (DFS)</h2>
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif" width="40%">
+<p><em>Credit: Wikipedia</em></p>
+
+        </section>
+        
+        <section>
+            <h3>DFS Complexity analysis</h3>
+
+        </section>
+        
+        <section>
+            <h3>DFS Psuedocode</h3>
+<pre><code class="language-python">def dfs_find(graph: dict[int, list[tuple[int, int]]],
+             start: int, end: int) -&gt; bool:
+    &quot;&quot;&quot;
+    Perform a depth-first search on a graph.
+    &quot;&quot;&quot;
+    visited = set()
+    stack = [start]
+
+    while stack:
+        vertex = stack.pop()
+        if vertex not in visited:
+            visited.add(vertex)
+            if vertex == end:
+                return True
+            stack.extend(graph[vertex])
+            
+    return False
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Recursive DFS</h3>
+<pre><code class="language-python">visited = set()
+def dfs_find_recursive(graph: dict[int, list[tuple[int, int]]],
+                       start: int, end: int) -&gt; bool:
+    &quot;&quot;&quot;
+    Perform a depth-first search on a graph.
+    &quot;&quot;&quot;
+    
+    if start == end:
+        return True
+    
+    visited.add(start)
+    for neighbor in graph[start]:
+        if dfs_find_recursive(graph, neighbor[0], end):
+            return True
+
+    return False
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>DFS in <code>networkx</code></h3>
+<pre><code class="language-python">import networkx as nx
+
+graph = nx.Graph()
+graph.add_edges_from([(1, 2), (1, 3), (2, 4), (3, 4), (3, 5), (4, 5)])
+
+print(list(nx.edge_dfs(graph, 1)))
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h1><code>fin</code></h1>
+
+        </section>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+    });
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>SIMC Lesson 4 - Machine Learning</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/darcula.min.css">
+
+    <style>
+        h1 {
+            font-size: 1.5em;
+        }
+        h2 {
+            font-size: 1.2em;
+        }
+        p, li {
+            font-size: 0.75em;
+        }
+        code {
+            font-size: 0.8em;
+        }
+        table, blockquote {
+            font-size: 0.6em;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        
+        <section>
+            <h1>Lesson 4</h1>
+<h2>Machine Learning with <code>scikit-learn</code></h2>
+<img src="https://p-81fpym.t0.n0.cdn.getcloudapp.com/items/OAuWZ7ol/6ec2187c-e462-404f-9df9-e225ce8aabca.png?source=viewer&v=69d8fa23285650289d6cb59874ade9b1" width="20%">
+        </section>
+        
+        <section>
+            <h2>Lesson Outline</h2>
+<ul>
+<li>A broad understanding of how machine learning works</li>
+<li>Appreciate the machine learning workflow</li>
+<li>Understand what is regression in machine learning</li>
+<li>Know how to use regression using a simple example in scikit-learn</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h2>Machine Learning</h2>
+<p>Intuition and understanding</p>
+<p><strong>Warning: Requires an understanding of calculus</strong></p>
+
+        </section>
+        
+        <section>
+            <h2>What is machine learning really doing?</h2>
+<p>In school, you probably have been given some mathematical function, such as
+$f(x) = x^2 + x + 1$ or something along those lines. You probably have also
+been given some values of $x$ to plug into the function, such as $x = [1, 2, 3, 4, 5]$.
+You would then go about evaluating the function like $f(1)$, $f(2)$, $f(3)$, and so on,
+while recording the outputs.</p>
+<p>In machine learning, we don’t know what the function is, but we do know what the inputs
+are and what the outputs are. We use the inputs and outputs to fit a model to the data,
+and we can use that model to predict outputs for inputs it hasn’t seen before.</p>
+
+        </section>
+        
+        <section>
+            <h3>The process</h3>
+<p>It sounds pretty hand-wavey to say “just give it inputs and outputs, and the machine will
+magically figure out the rest”, and that would be correct. Let’s actually take
+the time to explain the math behind it.</p>
+
+        </section>
+        
+        <section>
+            <h3>ML Model</h3>
+<p>We must first construct a model. For simple regression tasks, a linear model
+will do. For example, here’s a model: $f(x) = wx + b$. In this case, $w$
+is some coefficient and $b$ is some intercept. We call them the <em>parameters</em> of the
+model. We don’t know what $w$ and $b$ actually
+are just yet, so we’ll just set them to be some random values for now.</p>
+<p>More generally, a model probably will look something like this</p>
+<p>$$
+f(x) = W \cdot x + B
+$$</p>
+<p>where $W$ is a matrix of coefficients and $B$ is a vector of intercepts.</p>
+
+        </section>
+        
+        <section>
+            <p>A model by itself isn’t really useful, since we don’t know what those coefficients
+are. Let’s continue using our simple linear model: $f(x) = wx + b$. We need to be able
+to measure how correct or wrong our model actually is. We do this with something called
+a loss function. </p>
+<p>A commonly used loss function is the squared error. Imagine plotting the output
+of the model, and the actual value. We can measure the distance between them and
+square it. That’s the squared error.</p>
+<p>In our case, the loss function would look something like:</p>
+<p>$$
+L(y, y’) = (y - y’)^2
+$$</p>
+<p>Where $y$ is the actual output and $y’$ is the predicted output.</p>
+
+        </section>
+        
+        <section>
+            <h3>Updating the parameters</h3>
+<p>It’s all well and good that we have a loss function, but how does that
+relate to our parameters. Well, let’s combine our model: $f(x) = wx + b$ with
+our loss function: $L(y, y’) = (y - y’)^2$.</p>
+<p>$$
+\begin{align}
+L(y, f(x)) &amp;= (y - f(x))^2\\
+&amp;= (y - (wx + b))^2\\
+&amp;= y^2 - 2y(wx + b) + (wx + b)^2\\
+&amp;= y^2 - 2y(wx + b) + w^2x^2 + 2wxb + b^2\\
+&amp;= y^2 - 2wxy - 2by + w^2x^2 + 2wxb + b^2\\
+\end{align}
+$$</p>
+
+        </section>
+        
+        <section>
+            <h3>Gradient descent</h3>
+<p>Now that we have a loss function, we’d like to know how to adjust
+our parameters in order to minimize our loss. This is where we need
+calculus. We would like to ask the question of, how do our parameters change
+with respect to our inputs?</p>
+<p>Remember our loss function which we expanded previously?
+$$
+L(y, f(x)) = y^2 - 2wxy - 2by + w^2x^2 + 2wxb + b^2
+$$</p>
+<p>Well, let’s take a partial derivative of this function with respect to
+the weight. For those who aren’t familiar with multivariable calculus,
+just note that when we say something like $\frac{\partial L}{\partial w}$ we’re
+treating all other variables as constant.</p>
+
+        </section>
+        
+        <section>
+            <p>Anyway, let’s take $\frac{\partial L}{\partial w}$</p>
+<p>$$
+\frac{\partial L(y, f(x))}{\partial w} = 2xy + 2wx^2 + 2bx
+$$</p>
+<p>This tells us how our weight changes with respect to our inputs.</p>
+<p>Let’s take $\frac{\partial L}{\partial b}$ too</p>
+<p>$$
+\frac{\partial L(y, f(x))}{\partial b} = 2y + 2wx + 2b
+$$</p>
+<p>This tells us how our bias changes with respect to our inputs.</p>
+
+        </section>
+        
+        <section>
+            <h3>Updating our parameters</h3>
+<p>We now use gradient descent to update our parameters.</p>
+<p>$$
+w := w - \alpha \frac{\partial L}{\partial w}
+$$
+$$
+b := b - \alpha \frac{\partial L}{\partial b}
+$$</p>
+<p>Here, $\alpha$ is the learning rate, which controls how quickly
+the parameters get updated.</p>
+
+        </section>
+        
+        <section>
+            <p>Previously, 
+$$
+\begin{align}
+\frac{\partial L}{\partial w} &amp;= 2xy + 2wx^2 + 2bx\\
+&amp;= 2x(y + wx + b)
+\end{align}
+$$
+and
+$$
+\begin{align}
+\frac{\partial L}{\partial b} &amp;= 2y + 2wx + 2b\\
+&amp;= 2(y + wx + b)
+\end{align}
+$$</p>
+<p>If $w$ and $b$ are very far off from the correct values,
+gradient descent will update them by a larger step. If $w$ and $b$ are closer to
+the correct values, gradient descent will update them by a smaller step.</p>
+
+        </section>
+        
+        <section>
+            <h2>Further exploration.</h2>
+<p>Gradient descent works even if your model is extremely complex and has
+billions of parameters. By relating the loss function (how wrong the model is),
+to the parameters of the model, we can update the parameters in the direction
+of decreasing loss.</p>
+
+        </section>
+        
+        <section>
+            <h2>Demo: Fitting a cubic to $\sin(x)$</h2>
+<p>We will attempt to fit our cubic model: $y = ax + bx^2 + cx^3$ 
+to the data $\sin(x)$ using the least squares method.</p>
+
+        </section>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+    });
+</script>
+</body>
+</html>
+
+

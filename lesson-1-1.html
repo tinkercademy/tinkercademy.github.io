@@ -1,0 +1,443 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>SIMC Lesson 1.1 - Ecommerce</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/darcula.min.css">
+
+    <style>
+        h1 {
+            font-size: 1.5em;
+        }
+        h2 {
+            font-size: 1.2em;
+        }
+        p, li {
+            font-size: 0.75em;
+        }
+        code {
+            font-size: 0.8em;
+        }
+        table, blockquote {
+            font-size: 0.6em;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        
+        <section>
+            <h1>Problem: “Ecommerce”</h1>
+<h2>SIMC Course - Lesson 1.1</h2>
+<img src="https://p-81fpym.t0.n0.cdn.getcloudapp.com/items/OAuWZ7ol/6ec2187c-e462-404f-9df9-e225ce8aabca.png?source=viewer&v=69d8fa23285650289d6cb59874ade9b1" width="20%">
+        </section>
+        
+        <section>
+            <h2>Problem description</h2>
+<p>We have a shop with the following items</p>
+<table><thead><tr><th><strong>Product</strong></th><th><strong>Price</strong></th><th><strong>Quantity in stock</strong></th></tr></thead><tbody>
+<tr><td>Bread</td><td>0.42</td><td>69</td></tr>
+<tr><td>Milk</td><td>1.69</td><td>42</td></tr>
+<tr><td>Cheese</td><td>6.94</td><td>10</td></tr>
+</tbody></table>
+<p>The user wants to buy some items. When the user inputs <code>buy</code>
+into your program, they will provide <code>prod,qty</code> to your program,
+where <code>prod</code> is the name of the product, and <code>qty</code> is the number
+of items they would like to add to their cart. </p>
+
+        </section>
+        
+        <section>
+            <p>For example:
+<code>Bread,5</code> will add 5 of Bread to their cart. When the user types <code>checkout</code>,
+they will be shown the contents of their cart, and the total price they need
+to pay. In the example above, they will be shown the following:</p>
+<pre><code class="language-text">- 5x Bread
+Total: $2.10
+</code></pre>
+<p>If their cart has more items, you should
+print out each separate instance. For example:</p>
+<pre><code class="language-text">- 5x Bread
+- 1x Milk
+Total: $3.79
+</code></pre>
+
+        </section>
+        
+        <section>
+            <p>The program should ignore any invalid commands.
+Acceptable commands are <code>buy</code>, <code>checkout</code>, <code>exit</code>.</p>
+<ul>
+<li><code>buy</code> - starts buy process, discussed previously</li>
+<li><code>checkout</code> - shows the contents of the cart, and the total price</li>
+<li><code>exit</code> - Quit the program</li>
+</ul>
+<p>The program should warn the user (and not crash) if the item they try to buy</p>
+<ul>
+<li>does not exist</li>
+<li>is out of stock</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h3>Tips</h3>
+<p>You might want to use the following things</p>
+<table><thead><tr><th><strong>Thing</strong></th><th><strong>Search engine term</strong></th></tr></thead><tbody>
+<tr><td><code>string.split</code></td><td>Python string split</td></tr>
+<tr><td><code>input</code></td><td>Python input function</td></tr>
+<tr><td><code>dict</code></td><td>Python dictionaries</td></tr>
+<tr><td><code>f-string</code></td><td>Python f strings</td></tr>
+<tr><td><code>try-except</code></td><td>Python try except</td></tr>
+<tr><td>Type casting</td><td>Python type casting</td></tr>
+</tbody></table>
+<blockquote>
+<p>Hint: You will probably want to type cast string to int sometime.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h2>Solution walkthrough</h2>
+
+        </section>
+        
+        <section>
+            <h2>Understanding the problem</h2>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 1</strong> Maintain the pricing table</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 2</strong> Maintain the shop inventory</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 3</strong> Handling user input
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 3.1</strong> See which command is being requested</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 3.2</strong> Handle the <code>buy</code> command</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 3.3</strong> Handle the <code>checkout</code> command</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 3.4</strong> Handle the <code>exit</code> command</li>
+</ul>
+</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h3>Maintaining the pricing table</h3>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+<strong>Req 1</strong> <em>Maintain the pricing table</em></li>
+</ul>
+<p>The pricing table is a lookup table which we can store as a dictionary:</p>
+<pre><code class="language-python">price_table = {
+    &quot;Bread&quot;: 0.42,
+    &quot;Milk&quot;: 1.69,
+    &quot;Cheese&quot;: 6.94
+}
+</code></pre>
+<p>We can check the price of any item in the table safely</p>
+<pre><code class="language-python">price_table.get(&quot;Bread&quot;) # 0.42
+price_table.get(&quot;Nonexistent&quot;) # None
+</code></pre>
+<p>If the item is not in the table, the above statement returns <code>None</code>.</p>
+
+        </section>
+        
+        <section>
+            <h3>Maintaining the inventory</h3>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+<strong>Req 2</strong> <em>Maintain the shop inventory</em></li>
+</ul>
+<p>Our inventory is also simply just another dictionary.</p>
+<pre><code class="language-python">inventory = {
+    &quot;Bread&quot;: 69,
+    &quot;Milk&quot;: 42,
+    &quot;Cheese&quot;: 10
+}
+</code></pre>
+<p>And again, we can use <code>.get</code> to check the quantity of an item in the
+inventory, similar to the pricing table.</p>
+
+        </section>
+        
+        <section>
+            <h3>Current progress</h3>
+<pre><code class="language-python">price_table = {
+    &quot;Bread&quot;: 0.42,
+    &quot;Milk&quot;: 1.69,
+    &quot;Cheese&quot;: 6.94
+}
+
+inventory = {
+    &quot;Bread&quot;: 69,
+    &quot;Milk&quot;: 42,
+    &quot;Cheese&quot;: 10
+}
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Handling user input</h3>
+<p>We can use <code>input(prompt)</code> to get user input.</p>
+<pre><code class="language-python">user_input = input(&quot;Enter your command &gt; &quot;)
+</code></pre>
+<p><img src="./img/7.md/7.png" alt="Example output" /></p>
+
+        </section>
+        
+        <section>
+            <h2>Handling user input</h2>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+<strong>Req 3</strong> <em>Handling user input</em></li>
+</ul>
+<p><code>user_input</code> is now a string containing what the user typed into the prompt.
+We can use a bunch of <code>if-elif</code> blocks to check their command</p>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+<strong>Req 3.1</strong> <em>See which command is being requested</em></li>
+</ul>
+<pre><code class="language-python">user_input = input(&quot;Enter your command &gt; &quot;)
+if user_input == &quot;buy&quot;:
+    ...
+elif user_input == &quot;checkout&quot;:
+    ...
+else:
+    print(&quot;Invalid command!&quot;)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Invalid input</h3>
+<p>If the user provided invalid input, we should show them the prompt again.
+This can be easily accomplished with an infinite loop</p>
+<pre><code class="language-python">exit_prog = False
+while not exit_prog:
+    user_input = input(&quot;Enter your command &gt; &quot;)
+    if user_input == &quot;exit&quot;:
+        exit_prog = True
+    else:
+        print(&quot;Invalid command!&quot;)
+print(&quot;Goodbye!&quot;)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Current progress</h3>
+<pre><code class="language-python"># snip: pricing table not included to save space
+exit_prog = False
+while not exit_prog:
+    user_input = input(&quot;Enter your command &gt; &quot;)
+    if user_input == &quot;buy&quot;:
+        ...
+    elif user_input == &quot;checkout&quot;:
+        ...
+    elif user_input == &quot;exit&quot;:
+        exit_prog = True
+    else:
+        print(&quot;Invalid command!&quot;)
+print(&quot;Goodbye!&quot;)
+</code></pre>
+<blockquote>
+<p>Note: You can also use <code>break</code> to break them out. In which case,
+<code>while not exit_prog</code> can actually be replaced with <code>while True</code>.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h3>Handling the <code>buy</code> command</h3>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+<strong>Req 3.2</strong> Handle the <code>buy</code> command</li>
+</ul>
+<pre><code class="language-python">cart = {}
+def buy_cmd():
+    buy_req = input(&quot;Enter the item and quantity you wish to purchase [item,qty] &gt; &quot;)
+    if len(buy_req.split(&quot;,&quot;)) != 2:
+        print(&quot;Invalid input!&quot;)
+        return
+    item, qty = buy_req.split(&quot;,&quot;)
+    if item not in price_table.keys():
+        print(&quot;Invalid item!&quot;)
+        return
+    try:
+        qty = int(qty)
+    except ValueError:
+        print(&quot;Invalid quantity!&quot;)
+        return
+    if qty &gt; inventory[item]:
+        print(&quot;Not enough inventory!&quot;)
+        return
+    inventory[item] -= qty
+    if cart.get(item):
+        cart[item] += qty
+    else:
+        cart[item] = qty
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Handling the <code>checkout</code> command</h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Req 3.2</strong> Handle the <code>checkout</code> command</li>
+</ul>
+<pre><code class="language-python">cart = {}
+def checkout_cart():
+    total = 0
+    for item, qty in cart.items():
+        total += price_table[item] * qty
+        print(f&quot;- {qty}x {item}&quot;)
+    print(f&quot;Your total is ${total:.2f}&quot;)
+    cart.clear()
+</code></pre>
+<p>Note how we are actually iterating over the cart’s
+items and destructuring the key-value pair, since
+the items iterator emits a tuple (K, V)</p>
+
+        </section>
+        
+        <section>
+            <h3>Handling the <code>exit</code> command</h3>
+<p>We simply set <code>exit_prog</code> to <code>False</code>.
+Implementation is left as an exercise to the reader.</p>
+
+        </section>
+        
+        <section>
+            <h2>Our final program</h2>
+<pre><code class="language-python">price_table = {
+    &quot;Bread&quot;: 0.42,
+    &quot;Milk&quot;: 1.69,
+    &quot;Cheese&quot;: 6.94
+}
+
+inventory = {
+    &quot;Bread&quot;: 69,
+    &quot;Milk&quot;: 42,
+    &quot;Cheese&quot;: 10
+}
+
+cart = {}
+
+def buy_cmd():
+    buy_req = input(&quot;Enter the item and quantity you wish to purchase [item,qty] &gt; &quot;)
+    if len(buy_req.split(&quot;,&quot;)) != 2:
+        print(&quot;Invalid input!&quot;)
+        return
+    item, qty = buy_req.split(&quot;,&quot;)
+    if item not in price_table.keys():
+        print(&quot;Invalid item!&quot;)
+        return
+    try:
+        qty = int(qty)
+    except ValueError:
+        print(&quot;Invalid quantity!&quot;)
+        return
+    if qty &gt; inventory[item]:
+        print(&quot;Not enough inventory!&quot;)
+        return
+    inventory[item] -= qty
+    if cart.get(item):
+        cart[item] += qty
+    else:
+        cart[item] = qty
+        
+def checkout_cart():
+    total = 0
+    for item, qty in cart.items():
+        total += price_table[item] * qty
+        print(f&quot;- {qty}x {item}&quot;)
+    print(f&quot;Your total is ${total:.2f}&quot;)
+    cart.clear()
+
+exit_prog = False
+while not exit_prog:
+    user_input = input(&quot;Enter your command &gt; &quot;)
+    if user_input == &quot;buy&quot;:
+        buy_cmd()
+    elif user_input == &quot;checkout&quot;:
+        checkout_cart()
+    elif user_input == &quot;exit&quot;:
+        exit_prog = True
+    else:
+        print(&quot;Invalid command!&quot;)
+print(&quot;Goodbye!&quot;)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Additional challenges</h2>
+<ul>
+<li><strong>Trivial</strong> Add tax and print out tax price. (~30s)</li>
+<li><strong>Easy</strong> Add a <code>view</code> command which allows you to view
+the store inventory and price. (~1min)</li>
+<li><strong>Easy</strong> Add a <code>remove</code> command which allows you to remove
+items from the cart. (~1.5min)</li>
+<li><strong>Easy</strong> Compute the subtotal for each item (~1.5min). For example:</li>
+</ul>
+<pre><code class="language-text">- 5x Bread @ $0.42 = $2.10
+- 1x Milk @ $1.69 = $1.69
+Total: $3.79
+</code></pre>
+<ul>
+<li><strong>Easy</strong> Add a <code>search</code> command to find items in the
+store. (~2min)
+<ul>
+<li><strong>Medium</strong> Use a fuzzy search instead (~5min)</li>
+</ul>
+</li>
+<li><strong>Easy</strong> Remove the need to maintain both a pricing
+table and an inventory table. (~2min)</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h1><code>fin</code></h1>
+<p>Credits:</p>
+<ul>
+<li>Myself, for inventing this exercise. Adapted from a friend’s suggestion.
+(no, I did not pay the friend because I’m just mean like that)</li>
+</ul>
+
+        </section>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+    });
+</script>
+</body>
+</html>
+
+

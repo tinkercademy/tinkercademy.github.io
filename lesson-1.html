@@ -1,0 +1,500 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>SIMC Lesson 1 - Python Review</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/darcula.min.css">
+
+    <style>
+        h1 {
+            font-size: 1.5em;
+        }
+        h2 {
+            font-size: 1.2em;
+        }
+        p, li {
+            font-size: 0.75em;
+        }
+        code {
+            font-size: 0.8em;
+        }
+        table, blockquote {
+            font-size: 0.6em;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        
+        <section>
+            <h1>Lesson 1</h1>
+<h2>Python Review</h2>
+<img src="https://p-81fpym.t0.n0.cdn.getcloudapp.com/items/OAuWZ7ol/6ec2187c-e462-404f-9df9-e225ce8aabca.png?source=viewer&v=69d8fa23285650289d6cb59874ade9b1" width="20%">
+        </section>
+        
+        <section>
+            <h2>Python installation</h2>
+<p>Download Python here <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>. You will want version 3.10.</p>
+<p>Alternatively, search for “Python 3.10” in your favorite search engine.</p>
+
+        </section>
+        
+        <section>
+            <h2>Lesson overview</h2>
+<ul>
+<li>Conditionals <code>if/else/elif</code></li>
+<li>Loops <code>while/for</code></li>
+<li>Functions</li>
+<li>Lists
+<ul>
+<li>List comprehension</li>
+</ul>
+</li>
+<li>Dictionaries
+<ul>
+<li>Dictionary comprehension</li>
+</ul>
+</li>
+<li>Other common collections (sets/tuples)</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h2>Data types crash-course</h2>
+<pre><code class="language-python"># Integer
+x = 1 
+# Float
+y = 1.0 
+# String
+z = &quot;Hello&quot; 
+# Boolean, can be either True or False
+a = True 
+# List
+b = [1, 2, 3, 3, 4] 
+# Tuple (basically, an immutable (non-editable) list)
+c = (1, 2, 3, 3, 4) 
+# Set (same concept as sets in math)
+d = {1, 2, 3} 
+# Dictionary which maps K-&gt;V
+e = {1: &quot;one&quot;, 2: &quot;two&quot;} 
+</code></pre>
+<blockquote>
+<p>Python performs type inference, so you don’t need to specify the type of a variable.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h2>Accessing things in lists and dictionaries</h2>
+<pre><code class="language-python">a = [1, 2, 3]
+a[0] # 1
+a[1] # 2
+</code></pre>
+<pre><code class="language-python">a = {1: &quot;one&quot;, 2: &quot;two&quot;}
+a[1] # &quot;one&quot;
+a[2] # &quot;two&quot;
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>FizzBuzz</h2>
+<p>Psuedo-code: </p>
+<pre><code class="language-text">For numbers from 1 to 100
+    If the number is divisible by 3, print Fizz.
+    If the number is divisible by 5, print Buzz.
+    If the number is divisible by both 3 and 5, print FizzBuzz
+    If none of those match, print out the number
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Conditional statements</h2>
+<p>Executes code if <code>(EXPR)</code> evaluates to <code>True</code></p>
+<pre><code class="language-text">if (EXPR):
+    (CODE if expr is True)
+else:
+    (CODE if expr is False)
+</code></pre>
+<pre><code class="language-python">x = 5
+if x &gt; 6:
+    print(&quot;Oh no!&quot;)
+else:
+    print(&quot;We good&quot;)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <p>You can also evaluate things that may not seem to be booleans.</p>
+<p>For example, an empty string will evaluate to false</p>
+<pre><code class="language-python">if &quot;&quot;:
+    print(&quot;Expr true&quot;)
+else:
+    print(&quot;Expr false&quot;)
+</code></pre>
+<p><code>0</code>, None and the empty list will also evaluate to false</p>
+
+        </section>
+        
+        <section>
+            <h2><code>elif</code></h2>
+<pre><code class="language-python">A = False
+B = True
+
+if A:
+    print(&quot;A is true&quot;)
+elif B:
+    print(&quot;B is true&quot;)
+else:
+    print(&quot;Neither A nor B is true&quot;)
+</code></pre>
+<p>You can stack as many <code>elif</code> blocks as you want below an <code>if</code> block.</p>
+
+        </section>
+        
+        <section>
+            <h2>Loops</h2>
+<ul>
+<li><code>for</code></li>
+<li><code>while</code></li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h2><code>for</code> loop</h2>
+<p>Loops over an iterable.
+This loop goes through every item in the iterable, and stores the current item 
+in the variable as defined. You are then able to use the variable in the loop.</p>
+<pre><code class="language-text">for VARIABLE in ITERABLE:
+    # VARIABLE is available within this context
+    (CODE) 
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Example 1</h3>
+<p>Prints out the numbers from 0 to 9.</p>
+<pre><code class="language-python"># Note: range emits integers from [start, stop)
+for i in range(0, 10): 
+    # 0 can be omitted since it is the default
+    print(i)
+</code></pre>
+<blockquote>
+<p>For advanced readers: The range function is a generator.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h3>Example 2</h3>
+<p>We can also iterate over a list</p>
+<pre><code class="language-python">a = [&quot;hello&quot;, &quot;bonjour&quot;, &quot;hola&quot;]
+for thing in a:
+    print(thing)
+</code></pre>
+<p>This will print out every item in the list</p>
+
+        </section>
+        
+        <section>
+            <h3>Example 3</h3>
+<p>We can also iterate over a string, character by character</p>
+<pre><code class="language-python">a = &quot;hello&quot;
+for ch in a:
+    print(ch) # Prints: h e l l o (each character on a separate line)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2><code>while</code> loop</h2>
+<p>Executes code while some condition holds true.</p>
+<pre><code class="language-text">while (EXPR):
+    (CODE)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Example 1</h3>
+<pre><code class="language-python"># Prints out 0, 1, 2, 3, 4
+x = 0
+while x &lt; 5:
+    print(x)
+    x += 1
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Functions</h2>
+<p>Sort of a re-useable piece of code.</p>
+<pre><code class="language-text">def FUNCTION_NAME(arg1, arg2... argn):
+    (CODE)
+    Optionally, return (VALUE)
+</code></pre>
+<p>Think of them like math functions. For example, take the function $f(x) = x^2 + 2x + 4$.
+We can take the output of the function and “store” it in a variable: $y := f(4)$</p>
+<pre><code class="language-python">def f(x):
+    return x**2 + 2*x + 4
+
+y = f(4)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Example 1</h3>
+<p>Functions do not just have to be math only functions.</p>
+<p>Adapted from <a href="https://github.com/ray-project/ray/blob/master/python/ray/data/dataset.py#L797-L846">https://github.com/ray-project/ray/blob/master/python/ray/data/dataset.py#L797-L846</a>.
+Permission granted by myself to myself to use this code.</p>
+<pre><code class="language-python">def random_sample(self, fraction: float, *,
+                  seed: Optional[int] = None):
+    if seed is not None:
+        random.seed(seed)
+
+    def process_batch(batch):
+        if isinstance(batch, list):
+            return [row for row in batch if random.random() &lt;= fraction]
+        if isinstance(batch, pa.Table):
+            return batch.filter(
+                pa.array(random.random() &lt;= fraction for _ in range(len(batch)))
+            )
+        if isinstance(batch, pd.DataFrame):
+            return batch.sample(frac=fraction)
+        if isinstance(batch, np.ndarray):
+            return np.array([row for row in batch if random.random() &lt;= fraction])
+        raise ValueError(f&quot;Unsupported batch type: {type(batch)}&quot;)
+
+    return self.map_batches(process_batch)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Example 2</h3>
+<p>Adapted from <a href="https://github.com/pytorch/pytorch/blob/master/torch/utils/data/dataset.py#L298-L347">https://github.com/pytorch/pytorch/blob/master/torch/utils/data/dataset.py#L298-L347</a>.
+Permission granted by myself to myself to use this code.</p>
+<pre><code class="language-python">def random_split(dataset, lengths,
+                 generator = default_generator):
+    if math.isclose(sum(lengths), 1) and sum(lengths) &lt;= 1:
+        subset_lengths: List[int] = []
+        for i, frac in enumerate(lengths):
+            n_items_in_split = int(
+                math.floor(len(dataset) * frac)  # type: ignore[arg-type]
+            )
+            subset_lengths.append(n_items_in_split)
+        remainder = len(dataset) - sum(subset_lengths)  # type: ignore[arg-type]
+        # add 1 to all the lengths in round-robin fashion until the remainder is 0
+        for i in range(remainder):
+            idx_to_add_at = i % len(subset_lengths)
+            subset_lengths[idx_to_add_at] += 1
+        lengths = subset_lengths
+
+    indices = randperm(sum(lengths), generator=generator).tolist()  # type: ignore[call-overload]
+    return [Subset(dataset, indices[offset - length : offset]) for offset, length in zip(_accumulate(lengths), lengths)]
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Example 3</h3>
+<p>Adapted from <a href="https://github.com/tinkertanker/tinkerqa-discord/blob/master/tinkerqa_discord/helpers.py#L18-L46">https://github.com/tinkertanker/tinkerqa-discord/blob/master/tinkerqa_discord/helpers.py#L18-L46</a>.</p>
+<pre><code class="language-python">def gen_embed(qn: str, author,
+              helper_role_ping: discord.Role):
+    embed = discord.Embed(title=&quot;QA Thread&quot;,
+                          description=...,
+                          color=0x2bff00)
+    embed_thumbnail_url = ...
+    avatar_url = author.default_avatar.url
+    if author.avatar:
+        avatar_url = author.avatar.url
+    embed.set_author(name=str(author),
+                     icon_url=avatar_url)
+    embed.set_thumbnail(
+        url=embed_thumbnail_url)
+    embed.add_field(name=&quot;Question&quot;, value=qn, inline=False)
+    embed.set_footer(text=&quot;Generated by tinkerqa-discord&quot;)
+    return embed
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Lists, extended</h2>
+<p>Lists can store more than one type of data. (For those of you who have used 
+statically-typed languages before, this is probably unfamiliar.)</p>
+<p>You probably don’t want to abuse this too much though, since it can lead to major
+confusion and unexpected behavior.</p>
+<pre><code class="language-python">a = [&quot;a&quot;, 1, 2.0, True, [&quot;look another list!&quot;]]
+</code></pre>
+<blockquote>
+<p>Advanced concept: This is possible because a python list is simply an array of pointers 
+to the actual bits of memory which are stored on the heap. Yes, integers are stored on the heap too.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h3>List comprehensions</h3>
+<p>We can build lists with list comprehensions.</p>
+<pre><code class="language-python"># Generates a list of integers starting from 0 all the way to 9
+nums = [x for x in range(10)]
+</code></pre>
+<p>This is much more concise than the equivalent for loop.</p>
+<pre><code class="language-python">nums = []
+for x in range(10):
+    nums.append(x)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <p>List comprehensions look even more powerful if you combine them with conditionals.</p>
+<pre><code class="language-python"># Generates a list of squares of even numbers from 0 to 9
+squares = [x**2 for x in range(10) if x % 2 == 0]
+</code></pre>
+<p>Compare it to this monstrosity:</p>
+<pre><code class="language-python">squares = []
+for x in range(10):
+    if x % 2 == 0:
+        squares.append(x**2)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Dictionaries, extended.</h3>
+<p>You can use almost anything* as the “keys” for the dictionary.</p>
+<pre><code class="language-python">d = {
+    &quot;hello&quot;: 1,
+    &quot;world&quot;: 2,
+    &quot;c&quot;: 3,
+}
+</code></pre>
+<blockquote>
+<p>anything: Only <em>hashable</em> types can be used as keys.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h3>Dictionary comprehensions</h3>
+<p>Just like with list comprehensions, we can build dictionaries with dictionary comprehensions.</p>
+<pre><code class="language-python"># Generates a dictionary of integers starting from 0 all the way to 9, mapping
+# each to its square
+nums = {x: x ** 2 for x in range(10)}
+</code></pre>
+<p>And the equivalent for loop:</p>
+<pre><code class="language-python">nums = {}
+for x in range(10):
+    nums[x] = x ** 2
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Other common collections</h2>
+<h3>Sets</h3>
+<p>Same as the mathematical ones</p>
+<pre><code class="language-python">a = [1, 1, 2, 2, 3, 3]
+# b = {1, 2, 3}
+b = set(a)
+</code></pre>
+<h3>Tuples</h3>
+<p>Very similar to dictionaries, except you aren’t allowed to modify the values.</p>
+<pre><code class="language-python">a = (1, 2, 3)
+a[0] # 1
+a[1] # 2
+a[0] = 5 # TypeError: 'tuple' object does not support item assignment
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Implementing FizzBuzz: Recap</h2>
+<p>Pause here if you need to recap this.</p>
+<pre><code class="language-text">For numbers from 1 to 100
+    If the number is divisible by 3, print Fizz.
+    If the number is divisible by 5, print Buzz.
+    If the number is divisible by both 3 and 5, print FizzBuzz
+    If none of those match, print out the number
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Implement FizzBuzz</h2>
+<p><strong>Pause the video now</strong></p>
+
+        </section>
+        
+        <section>
+            <h2>FizzBuzz: A naive solution</h2>
+<pre><code class="language-python">for i in range(1, 101):
+    if i % 3 == 0:
+        print(&quot;Fizz&quot;)
+    elif i % 5 == 0:
+        print(&quot;Buzz&quot;)
+    elif i % 3 == 0 and i % 5 == 0:
+        print(&quot;FizzBuzz&quot;)
+    else:
+        print(i)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>FizzBuzz: A better solution</h2>
+<pre><code class="language-python">for i in range(1, 101):
+    res = &quot;&quot;
+    if i % 3 == 0:
+        res += &quot;Fizz&quot;
+    if i % 5 == 0:
+        res += &quot;Buzz&quot;
+    if not res:
+        print(i)
+    else:
+        print(res)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h1><code>fin</code></h1>
+<p>That’s all!</p>
+
+        </section>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+    });
+</script>
+</body>
+</html>
+
+

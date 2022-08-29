@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>SIMC Lesson 2 - Graphs</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/darcula.min.css">
+
+    <style>
+        h1 {
+            font-size: 1.5em;
+        }
+        h2 {
+            font-size: 1.2em;
+        }
+        p, li {
+            font-size: 0.75em;
+        }
+        code {
+            font-size: 0.8em;
+        }
+        table, blockquote {
+            font-size: 0.6em;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        
+        <section>
+            <h1>Lesson 2</h1>
+<h2>Setup &amp; Graphs</h2>
+<img src="https://p-81fpym.t0.n0.cdn.getcloudapp.com/items/OAuWZ7ol/6ec2187c-e462-404f-9df9-e225ce8aabca.png?source=viewer&v=69d8fa23285650289d6cb59874ade9b1" width="20%">
+        </section>
+        
+        <section>
+            <h2>Lesson outline</h2>
+<ul>
+<li>Have a working installation of Python, scikit-learn and networkx on their systems</li>
+<li>Understand what a graph is</li>
+<li>Understand the terminology involved when describing a graph</li>
+<li>Understand the different ways graphs are stored/represented/viewed in networkx</li>
+<li>Know how to interpret a problem as a graph</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h2>Setup</h2>
+<p>In the last lesson, a link to download Python should have been provided.
+If you have not done so already, do so now and install it.</p>
+<p>If you are unable to install Python, you can use Google Colab 
+at this link: <a href="https://colab.research.google.com">https://colab.research.google.com</a></p>
+
+        </section>
+        
+        <section>
+            <h2>Installing packages.</h2>
+<p>We will be using jupyterlab as the development environment of choice.
+If you are familiar with any other IDEs, feel free to use them too.</p>
+<p>You will run the command below in your terminal.</p>
+<blockquote>
+<p>Note: If you are unsure what a terminal is:</p>
+<ul>
+<li>Windows: Command Prompt</li>
+<li>macOS: Terminal</li>
+<li>Linux: konsole/gnome-terminal/xterm/etc. (but really, you should know)</li>
+</ul>
+</blockquote>
+<pre><code class="language-bash">pip install jupyterlab
+</code></pre>
+<blockquote>
+<p>Note: If you are using colab, ignore this step!</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <p>Once done, start JupyterLab with the following command:</p>
+<pre><code class="language-bash">jupyter lab
+</code></pre>
+<blockquote>
+<p>Note: If you are using colab, skip this too!</p>
+</blockquote>
+<blockquote>
+<p>Note: VSCode users, you want to install the Jupyter extension.
+PyCharm Professional or DataSpell users,
+you don’t need to do anything, since it is supported out of the box.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h2>Jupyterlab</h2>
+<p>When you have started JupyterLab, it should look something like this:</p>
+<p><img src="./img/1c.md/1c_0.png" alt="Browser View" /></p>
+
+        </section>
+        
+        <section>
+            <h3>Notebooks</h3>
+<p>PyCharm users, you just need to create a notebook.</p>
+<p><img src="./img/1d.md/1d_0.png" alt="New File - PyCharm" /></p>
+
+        </section>
+        
+        <section>
+            <h2>Installing <code>networkx</code> and <code>scikit-learn</code></h2>
+<p>In the notebook, you will want to run the following:</p>
+<pre><code class="language-jupyter">%pip install networkx scikit-learn
+</code></pre>
+<p>Hit <code>shift+enter</code> afterwards to execute the code. This will
+also create a new cell below.</p>
+<p><img src="./img/1e.md/1e_0.png" alt="Jupyter install output" /></p>
+
+        </section>
+        
+        <section>
+            <h3>Other ways to create a new cell</h3>
+<p>You can also create a new cell by hitting this button:</p>
+<p><img src="./img/1e_1.md/1e1_0.png" alt="Add Button" /></p>
+
+        </section>
+        
+        <section>
+            <h3>Testing the packages</h3>
+<p>Let’s go ahead and see if the packages we need are installed.
+Run this in a new cell.</p>
+<pre><code class="language-python">import networkx as nx
+import sklearn
+import numpy as np
+
+print(nx.__version__, sklearn.__version__, np.__version__)
+</code></pre>
+<p><img src="./img/1f.md/1f_0.png" alt="Checking installed versions" /></p>
+<blockquote>
+<p>Note: As per the note in the previous cell, if the command fails,
+you can hit the little reload looking button near the stop
+button to restart the kernel.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h2>Graphs</h2>
+<p><em>No, they are not the things you draw on graph paper</em></p>
+<p>$G = (V, E)$</p>
+
+        </section>
+        
+        <section>
+            <h2>What is a graph?</h2>
+<p>We can formally describe a graph as a set of <strong>vertices</strong> $V$ and a set
+of <strong>edges</strong> $E$. Each edge describes a connection between two vertices.</p>
+<p>We sometimes also call a <strong>vertex</strong> a <strong>node</strong>.</p>
+<p>Here’s an <em>undirected</em> graph with 6 vertices and 7 edges.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/6n-graf.svg/2560px-6n-graf.svg.png" style="background-color: white;" width="50%">
+<p><em>Image credit: Wikipedia</em></p>
+
+        </section>
+        
+        <section>
+            <h2>Whyteboard Tyme</h2>
+<p>Please direct your attention to the whiteboard, where
+I will draw you some graphs.</p>
+
+        </section>
+        
+        <section>
+            <h3>Directed vs undirected graphs</h3>
+<p>In an <strong>undirected</strong> graph, there is no distinction between an edge going from
+$v_0$ to $v_1$ and an edge going from $v_1$ to $v_0$. We can represent
+them as a set: $\{ v_0, v_1 \}$.</p>
+<p>In contrast, a <strong>directed</strong> graph makes a clear distinction between
+an edge going from $v_0$ to $v_1$ and an edge going from $v_1$ to $v_0$.
+If we only have an edge from $v_0$ to $v_1$, we cannot 
+reach $v_1$ from $v_0$. We can represent this as a sequence:
+$&lt;v_0, v_1&gt;$.</p>
+
+        </section>
+        
+        <section>
+            <p>Here’s an example of a directed graph with 3 vertices and 3 edges.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Directed.svg/1920px-Directed.svg.png" style="background-color: white" width="50%" >
+<p><em>Credit: Wikipedia</em></p>
+
+        </section>
+        
+        <section>
+            <h3>Labelling nodes in graphs</h3>
+<p>We can label the nodes in our graphs to make them easier
+to refer to.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/6n-graf.svg/2560px-6n-graf.svg.png" style="background-color: white;" width="50%">
+<p>In this graph, the nodes are labelled 1 through 6.</p>
+
+        </section>
+        
+        <section>
+            <h3>Neighbors</h3>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/6n-graf.svg/2560px-6n-graf.svg.png" style="background-color: white;" width="35%">
+<p>Let’s look at node <strong>5</strong>. We note that it has <strong>3</strong> <em>neighbors</em>,
+nodes <strong>4</strong>, <strong>2</strong> and <strong>1</strong>.</p>
+<p>We can also write down a pair wise relationship like such:
+$(5, 4)$, $(5, 2)$, $(5, 1)$. Alternatively, if you prefer set
+syntax (seldom used): $\{5, 4\}$, $\{5, 2\}$, $\{5, 1\}$.</p>
+<blockquote>
+<p>Note: Since we are using an undirected graph, there is no
+distinction between, for example, $(5, 4)$ and $(4, 5)$.</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h2><code>networkx</code></h2>
+
+        </section>
+        
+        <section>
+            <h3>Creating a graph in networkx</h3>
+<p>The code below will create an empty graph.</p>
+<pre><code class="language-python">import networkx as nx
+
+G = nx.Graph()
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Adding nodes</h3>
+<p>We can add nodes to the empty graph we created.
+You can add any type of data which is hashable.
+You can also add multiple nodes at once by shoving
+them into a list.</p>
+<pre><code class="language-python">import networkx as nx
+
+G = nx.Graph()
+
+G.add_node(1)
+G.add_node(&quot;spam&quot;)
+G.add_node(3.1415926)
+# add multiple
+G.add_nodes_from([2, 3, 4])
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Adding edges</h3>
+<pre><code class="language-python">import networkx as nx
+
+G = nx.Graph()
+G.add_nodes_from([1, 2, 3, 4])
+
+G.add_edge(1, 2)
+
+e = (2, 3)
+G.add_edge(*e) # uses tuple unpacking
+
+# add multiple edges
+G.add_edges_from([(1, 3), (1, 4)])
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Accessing data in a graph</h3>
+<p>Gets the neighbors of a particular node.</p>
+<pre><code class="language-python">import networkx as nx
+
+G = nx.Graph()
+G.add_nodes_from([1, 2, 3, 4])
+G.add_edges_from([(1, 2), (1, 3), (1, 4)])
+
+print(G[1]) 
+# alternatively: G.adj[1]
+</code></pre>
+<p>Output: </p>
+<pre><code class="language-python">{2: {}, 3: {}, 4: {}}
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Graph Representations</h2>
+<ul>
+<li>Adjacency List</li>
+<li>Adjacency Matrix</li>
+</ul>
+<p>Edge lists are also a thing but they’re not as good
+as the above.</p>
+
+        </section>
+        
+        <section>
+            <h2>Whyteboard Tyme</h2>
+<p>Please direct your attention to the whiteboard, where
+I will draw you some representations of graphs.</p>
+
+        </section>
+        
+        <section>
+            <h3>Requesting an adjacency matrix from a networkx graph</h3>
+<pre><code class="language-python">import networkx as nx
+
+G = nx.Graph([(1, 2), (1, 3), (2, 3), (2, 4), (3, 4)])
+print(nx.adjacency_matrix(G))
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h3>Requesting an adjacency list for a networkx graph</h3>
+<pre><code class="language-python">import networkx as nx
+
+G = nx.Graph([(1, 2), (1, 3), (2, 3), (2, 4), (3, 4)])
+print(G.adj)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2><code>fin</code></h2>
+<p>Please view the supplementary videos for graph 
+problems.</p>
+
+        </section>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+    });
+</script>
+</body>
+</html>
+
+

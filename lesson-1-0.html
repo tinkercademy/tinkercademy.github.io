@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>SIMC Lesson 1 - FizzBuzz Solution Walkthrough</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/darcula.min.css">
+
+    <style>
+        h1 {
+            font-size: 1.5em;
+        }
+        h2 {
+            font-size: 1.2em;
+        }
+        p, li {
+            font-size: 0.75em;
+        }
+        code {
+            font-size: 0.8em;
+        }
+        table, blockquote {
+            font-size: 0.6em;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        
+        <section>
+            <h1>FizzBuzz: Walkthrough</h1>
+<h2>SIMC Course: Lesson 1</h2>
+<img src="https://p-81fpym.t0.n0.cdn.getcloudapp.com/items/OAuWZ7ol/6ec2187c-e462-404f-9df9-e225ce8aabca.png?source=viewer&v=69d8fa23285650289d6cb59874ade9b1" width="20%">
+        </section>
+        
+        <section>
+            <h2>Understanding the problem</h2>
+<ul>
+<li><strong>Req 1</strong> We need to check numbers from 1 to 100</li>
+<li><strong>Req 2</strong> We need to check for divisibility</li>
+<li><strong>Req 3</strong> We need to handle for divisibility by both 3 and 5</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h3>Understanding the problem: Looping</h3>
+<p><strong>Req 1</strong>: <em>We need to check numbers from 1 to 100</em></p>
+<ul>
+<li>We’ll need a loop - probably a <code>for</code> loop</li>
+<li>The <code>range</code> function will be helpful here</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h3>Understanding the problem: Divisibility</h3>
+<p><strong>Req 2</strong>: <em>We need to check for divisibility</em></p>
+<ul>
+<li>The modulo <code>%</code> operator will be quite helpful</li>
+<li>We know that if $a | b$, then $a \ \mathrm{mod} \ b = 0$</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h3>Understanding the problem: Handling the special case</h3>
+<p><strong>Req 3</strong>: <em>We need to handle the special case of numbers divisible by both 3 and 5</em></p>
+<ul>
+<li>We know that if $n | 3$ and $n | 5$, then $n | 15$.
+<ul>
+<li>The proof is left as an exercise for the reader.</li>
+</ul>
+</li>
+<li>Of course, we can also simply just check them with the logical <code>and</code>
+<ul>
+<li><code>if n % 3 == 0 and n % 5 == 0</code></li>
+</ul>
+</li>
+</ul>
+
+        </section>
+        
+        <section>
+            <h2>Putting our checks together</h2>
+<p>We can write our conditional checks first.
+Let’s say the number we want to check is <code>i</code>.</p>
+<pre><code class="language-python">i = 10
+
+if i % 3 == 0:
+    print(&quot;Fizz&quot;)
+elif i % 5 == 0:
+    print(&quot;Buzz&quot;)
+elif i % 3 == 0 and i % 5 == 0:
+    print(&quot;FizzBuzz&quot;)
+else:
+    print(i)
+</code></pre>
+<blockquote>
+<p>Caveat: Did you spot one?</p>
+</blockquote>
+
+        </section>
+        
+        <section>
+            <h3>Pitfall</h3>
+<p>However, what happens if we set i to 15 for the previous example?
+It prints out “Fizz” immediately. We can easily fix this by changing
+the order that the expressions are evaluated in.</p>
+<pre><code class="language-python">i = 15
+
+if i % 3 == 0 and i % 5 == 0:
+    print(&quot;FizzBuzz&quot;)
+elif i % 3 == 0:
+    print(&quot;Fizz&quot;)
+elif i % 5 == 0:
+    print(&quot;Buzz&quot;)
+else:
+    print(i)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Looping</h2>
+<h3>The <code>range</code> function</h3>
+<p>Adapted from <a href="https://docs.python.org/3/library/stdtypes.html#range">https://docs.python.org/3/library/stdtypes.html#range</a></p>
+<p><code>def range(start: int = 0, stop: int = None, step: int = 1) -&gt; Iterable[int]:</code></p>
+<p>The range function emits integers from the range $[start, stop)$.
+For example, <code>range(10)</code> will create integers from 0 to 9.</p>
+<p>In <code>range(10)</code>, it will sequentially emit integers in the sequence
+$$
+&lt;0, 1, 2, 3, 4, 5, 6, 7, 8, 9&gt;
+$$.</p>
+
+        </section>
+        
+        <section>
+            <h3>Range</h3>
+<p>Since we want numbers from 1 to 100, we will need the following range:
+<code>range(1, 101)</code>.</p>
+<p>We don’t need to adjust <code>step</code> here. <code>step</code> can change
+the increment between each integer emitted. For example, if we set step to 2
+in <code>range(0, 11, 2)</code>, we will get the following sequence:</p>
+<p>$$
+&lt;0, 2, 4, 6, 8, 10&gt;
+$$</p>
+
+        </section>
+        
+        <section>
+            <h2>Wrapping it up</h2>
+<p>We can simply wrap our check in a loop for the numbers 
+from 1 to 100.</p>
+<pre><code class="language-python">for i in range(1, 101):
+    if i % 3 == 0:
+        print(&quot;Fizz&quot;)
+    elif i % 5 == 0:
+        print(&quot;Buzz&quot;)
+    elif i % 3 == 0 and i % 5 == 0:
+        print(&quot;FizzBuzz&quot;)
+    else:
+        print(i)
+</code></pre>
+
+        </section>
+        
+        <section>
+            <h2>Conclusion</h2>
+<p>That was it. There are definitely better ways to solve this problem.
+Please check with your instructor if you have a different solution.</p>
+
+        </section>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+    });
+</script>
+</body>
+</html>
+
+
