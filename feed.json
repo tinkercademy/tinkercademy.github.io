@@ -3,7 +3,7 @@
     "publisherName": "tinkercademy",
     "feedIdentifier": "io.github.tinkercademy",
     "contactURL": "mailto:carl@tk.sg",
-    "formatVersion": "1.2",
+    "formatVersion": "1.0",
     "documents": [
         {
             "title": "Test Book",
