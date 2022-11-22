@@ -1,18 +1,23 @@
 {
     "title": "Bernina Swift Playgrounds",
-    "publisherName": "Tinkertanker",
+    "publisherName": "tinkercademy",
     "feedIdentifier": "io.github.tinkercademy",
     "contactURL": "mailto:carl@tk.sg",
     "formatVersion": "1.2",
     "documents": [
         {
             "title": "Test Book",
+            "overviewSubtitle": "Test Book for Demo Only",
             "description": "Test Demonstration of basic turtle functions and exporting to EXP",
             "contentIdentifier": "io.github.tinkercademy.testBook",
             "contentVersion": "1.0",
             "publishedDate": "2022-11-22T11:19:44.216Z",
             "lastUpdatedDate": "2022-11-22T11:19:44.216Z",
-            "url": "https://tinkercademy.github.io/TestBook/TestBook.playgroundbook.zip"
+            "url": "https://tinkercademy.github.io/TestBook/TestBook.playgroundbook.zip",
+            "additionalInformation": [],
+            "thumbnailURL": "TestBook/preview.png",
+            "bannerImageURL": "TestBook/preview.png",
+            "previewImageURLs": []
         }
     ]
 }
